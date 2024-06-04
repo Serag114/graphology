@@ -1,0 +1,42 @@
+extends layout
+
+
+block content
+  h1= title
+  p#contentParagraph Welcome to #{title}
+  script.
+    function getNodes() {
+      fetch('/runFunction', {method: 'POST'})
+              .then(function (response) {
+                if (!response.ok) {
+                  throw new Error('Bad status code from server.');
+                }
+                return response.json();
+              })
+              .then(function (data) {
+                  let html = '<ul>';
+                  data.nodes.forEach(node => {
+                      html += '<li>Name: ';
+                      html += node.key;
+                      html += '</li>';
+                  });
+                  html += '</ul>';
+                  html += '<ul>';
+                  data.edges.forEach(edge => {
+                      html += '<li>Edge von ';
+                      html += edge.source;
+                      html += ' zu ';
+                      html += edge.target;
+                      html += '</li>';
+                      console.log(edge.source);
+                      console.log(edge.target);
+                  })
+                  html += '</ul>';
+                document.getElementById('contentParagraph').innerHTML = html;
+              })
+              .catch(function (err) {
+                console.error('Fehler:', err);
+              });
+    }
+  button(onclick="getNodes()") Button
+
