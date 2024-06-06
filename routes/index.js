@@ -8,18 +8,15 @@ function getGraph() {
 
   const graph = new Graph();
 
-// Adding some nodes
-  graph.addNode('Platte 1');
-  graph.addNode('Platte 2');
-  graph.addNode('Platte 3');
-  graph.addNode('Platte 4');
+  graph.addNode('Platte 1', { label: "Platte 1", x: 10, y: 10, size: 10, color: "blue" });
+  graph.addNode('Platte 2', { label: "Platte 2", x: 20, y: 20, size: 10, color: "red" });
+  graph.addNode('Platte 3', { label: "Platte 3", x: 30, y: 30, size: 10, color: "green" });
+  graph.addNode('Platte 4', { label: "Platte 4", x: 40, y: 40, size: 10, color: "yellow" });
 
-// Adding an edge
-  graph.addEdge('Platte 1', 'Platte 2');
-  graph.addEdge('Platte 2', 'Platte 3');
-  graph.addEdge('Platte 3', 'Platte 4');
+  graph.addEdge('Platte 1', 'Platte 2', { size: 5, color: "purple" });
+  graph.addEdge('Platte 2', 'Platte 3', { size: 5, color: "purple" });
+  graph.addEdge('Platte 3', 'Platte 4', { size: 5, color: "purple" });
 
-// Displaying useful information about your graph
   console.log('Number of nodes', graph.order);
   console.log('Number of edges', graph.size);
 
@@ -38,11 +35,8 @@ router.get('/', function(req, res, next) {
 router.post('/runFunction', function(req, res) {
   let graph = getGraph();
 
-  /*graph.forEachNode(node => {
-    console.log(node);
-  });*/
-
-  res.send(graph.toJSON());
+  graph.export();
+  res.send(graph);
 });
 
 
